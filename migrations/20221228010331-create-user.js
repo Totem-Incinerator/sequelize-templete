@@ -2,7 +2,7 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     /**
      * Add altering commands here.
      *
@@ -23,14 +23,15 @@ module.exports = {
         type: Sequelize.STRING,
         unique: true
       },
-      role_id:{
+      role_id: {
         type: Sequelize.INTEGER,
-        references:{
-          model:{
+        references: {
+          model: {
             tableName: 'roles',
           },
           key: 'id'
-        },
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -39,11 +40,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-      }
     })
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add reverting commands here.
      *
