@@ -9,7 +9,11 @@
     "create-migration":"npx sequelize-cli migration:generate --name",
     "create-model":"npx sequelize-cli model:generate --name  --attibutes",
     "migrations":"npx sequelize-cli db:migrate",
-    "migrations-undo":"npx sequelize-cli db:migrate:undo"
+    "migrations-undo":"npx sequelize-cli db:migrate:undo",
+    "migrations-undo-all":"npx sequelize-cli db:migrate:undo:all",
+    "create-seeder":"npx sequelize-cli seed:generate --name",
+    "seeders":"npx sequelize-cli db:seed:all",
+    "seeders-undo":"npx sequelize-cli db:seed:undo:all"
   },
   "keywords": [],
   "author": "",
