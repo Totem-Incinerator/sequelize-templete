@@ -9,11 +9,13 @@ class Server{
     constructor(){
         this.app = express();
         this.port = process.env.PORT;
-        this.routes = {};
+        this.paths = {
+            users:'/api/users'
+        };
 
         this.databaseConnection();
         this.middlewares();
-        // this.routes();
+        this.routes();
 
     }
 
@@ -40,9 +42,12 @@ class Server{
         this.app.use( express.json() )
     }
 
-    // routes(){
-    //     // TODO: Rutas
-    // }
+    routes(){
+        
+        // USERS
+        this.app.use( this.paths.users, require('../routes/userRoutes') )
+
+    }
 
     listen(){
         this.app.listen(this.port, () => {

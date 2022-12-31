@@ -1,5 +1,6 @@
 const {DataTypes} = require('sequelize')
 const {db} = require('../database/dbconfig')
+const Role = require('./role')
 
 const User = db.define('User', {
   email:{
@@ -9,7 +10,12 @@ const User = db.define('User', {
   },
   password:{
     type: DataTypes.STRING
+  },
+  role_id:{
+    type: DataTypes.INTEGER,
+    references: 'Roles'
   }
 })
+
 
 module.exports = User
