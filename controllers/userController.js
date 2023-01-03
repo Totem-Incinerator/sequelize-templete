@@ -14,7 +14,7 @@ const getAll = async(req, res = response) => {
 
 }
 
-const create = async(req, res = response) => {
+const createUsers = async(req, res = response) => {
 
     const {email, password, role} = req.body
 
@@ -37,6 +37,6 @@ const create = async(req, res = response) => {
 }
 
 module.exports = {
-    create,
+    createUsers,
     getAll,
 }

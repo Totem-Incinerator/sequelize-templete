@@ -20,6 +20,15 @@ const createUser = async(data = {}) => {
     }
 }
 
+const findUsersByRole = async (roleName = "") => {
+
+    const {id} = await Role.findOne({where: {role_name: roleName}})
+
+    const user = await User.findOne({where:{role_id: id}})
+
+    return user
+}
+
 const updateUser = async (id = 0, data = {}) => {
 
     try {
@@ -63,5 +72,6 @@ module.exports ={
     createUser,
     deleteUser,
     getUsers,
-    updateUser
+    updateUser,
+    findUsersByRole
 }

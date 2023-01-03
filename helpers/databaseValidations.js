@@ -1,4 +1,5 @@
 const User = require('../models/user')
+const Role = require('../models/role')
 
 /**
  * 
@@ -16,6 +17,24 @@ const userExists = async(email = '') => {
     }
 }
 
+const roleExists = async(role = '') => {
+
+    if(role.length == 0){
+	throw new Error('role is empty')
+    }
+
+    const roleValidate = await Role.findOne({
+	where: {role_name: role}
+    })
+
+    if(!roleValidate){
+	throw new Error('role does not exists')
+    }
+
+}
+
+
 module.exports = {
-    userExists
+    userExists,
+    roleExists
 }
