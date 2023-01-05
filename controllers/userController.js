@@ -1,5 +1,5 @@
 const {request, response} = require('express')
-const {getUsers, createUser} = require('../services/user.service')
+const {getUsers, createUser, updateUser} = require('../services/user.service')
 
 const getAll = async(req, res = response) => {
     
@@ -34,6 +34,28 @@ const createUsers = async(req, res = response) => {
         })
     }
 
+}
+
+const updateUser = async(req, res = response) => {
+    const {id} = req.params
+
+    const data = req.body
+
+    try{
+	const userUpdate = await updateUser(id, data)
+
+	res.status(200).json({
+	    msg:'user updated',
+	    user: userUpdate
+	})
+
+    }catch(error){
+	console.log(error)
+	res.status(500).json({
+	    msg: 'error, contact admin'
+	})
+
+    }
 }
 
 module.exports = {
