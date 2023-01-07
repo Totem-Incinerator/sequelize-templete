@@ -1,11 +1,11 @@
 const {request, response} = require('express')
-const {getUsers, createUser, updateUser} = require('../services/user.service')
+const {getUsersService, createUserService, updateUserService, deleteUserService} = require('../services/user.service')
 
 const getAll = async(req, res = response) => {
-    
+
     const {limit = 5, offset = 0} = req.query
     
-    const {total, users} = await getUsers(limit, offset)
+    const {total, users} = await getUsersService(limit, offset)
 
     res.json({
         total,
@@ -14,6 +14,7 @@ const getAll = async(req, res = response) => {
 
 }
 
+
 const createUsers = async(req, res = response) => {
 
     const {email, password, role} = req.body
@@ -21,7 +22,7 @@ const createUsers = async(req, res = response) => {
     const data = {email, password, role}
 
     try{
-        const user = await createUser(data)
+        const user = await createUserService(data)
 
         res.status(202).json({
             msg: "user created",
@@ -42,23 +43,48 @@ const updateUser = async(req, res = response) => {
     const data = req.body
 
     try{
-	const userUpdate = await updateUser(id, data)
 
-	res.status(200).json({
-	    msg:'user updated',
-	    user: userUpdate
-	})
+      const userUpdate = await updateUserService(id, data)
+
+	    res.status(200).json({
+	      msg:'user updated',
+	      user: userUpdate
+	    })
 
     }catch(error){
-	console.log(error)
-	res.status(500).json({
-	    msg: 'error, contact admin'
-	})
+      console.log(error)
+      res.status(500).json({
+	      msg: 'error, contact admin'
+	    })
 
     }
 }
 
+const deleteUser = async(req, res = response) => {
+
+  const {id} = req.params
+
+  try{
+
+    await deleteUserService(id)
+    
+    res.status(200).json({
+      msg:'user deleted'
+    })
+
+  }catch(error){
+    console.error(error)
+    res.status(500).json({
+      msg: 'server errror, contact admin'
+    })
+  }
+
+}
+
+
 module.exports = {
     createUsers,
+    deleteUser,
     getAll,
+    updateUser
 }

@@ -2,7 +2,7 @@ const User = require('../models/user.js')
 const Role = require('../models/role')
 const passwordEncryption = require('../helpers/passwordEncryption')
 
-const createUser = async(data = {}) => {
+const createUserService = async(data = {}) => {
 
     data.password = passwordEncryption(data.password)
 
@@ -20,7 +20,7 @@ const createUser = async(data = {}) => {
     }
 }
 
-const findUsersByRole = async (roleName = "") => {
+const findUsersByRoleService = async (roleName = "") => {
 
     const {id} = await Role.findOne({where: {role_name: roleName}})
 
@@ -29,7 +29,16 @@ const findUsersByRole = async (roleName = "") => {
     return user
 }
 
-const updateUser = async (id = 0, data = {}) => {
+const updateUserService = async (id = 0, data = {}) => {
+
+    if(data.role){
+      const {id} = await Role.findOne({where:{role_name:data.role}})
+      data.role_id = id
+    }
+    
+    if(data.password){
+      data.password = passwordEncryption(data.password)
+    }
 
     try {
         await User.update(data, {where: {id: id}})
@@ -40,7 +49,7 @@ const updateUser = async (id = 0, data = {}) => {
 
 }
 
-const deleteUser = async (id = 0) => {
+const deleteUserService = async (id = 0) => {
 
     try{
 
@@ -52,12 +61,13 @@ const deleteUser = async (id = 0) => {
 
     }catch(error){
         console.log(error)
+      p
         throw new Error('errordeleting user ', error.message)
     }
 
 }
 
-const getUsers = async(limit = 5, offset = 0) => {
+const getUsersService = async(limit = 5, offset = 0) => {
     
     const [users, preTotal] = await Promise.all([
         User.findAll({offset: Number(offset), limit: Number(limit)}),
@@ -69,9 +79,9 @@ const getUsers = async(limit = 5, offset = 0) => {
 }
 
 module.exports ={
-    createUser,
-    deleteUser,
-    getUsers,
-    updateUser,
-    findUsersByRole
+    createUserService,
+    deleteUserService,
+    getUsersService,
+    updateUserService,
+    findUsersByRoleService
 }
